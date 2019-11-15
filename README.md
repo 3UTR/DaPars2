@@ -1,5 +1,5 @@
 # DaPars2
-Dynamics analysis of Alternative PolyAdenylation from tumor alone RNA-seq data
+Dynamics analysis of Alternative PolyAdenylation from multiple RNA-seq data
 
 [**Full Documentations**](http://lilab.research.bcm.edu/dldcc-web/lilab/Lei/DaPars2_Documentation/DaPars2.html)
 Description
@@ -13,6 +13,7 @@ Citation
 -----
 *Please cite the following articles if you use DaPars2 in your research*:
 * Xin Feng, Lei Li, Eric J Wagner, Wei Li; TC3A: The Cancer 3′ UTR Atlas, Nucleic Acids Research, Volume 46, Issue D1, 4 January 2018, Pages D1027–D1030
+
 
 Contact
 -----
