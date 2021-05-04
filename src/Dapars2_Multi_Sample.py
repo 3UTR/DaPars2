@@ -8,9 +8,6 @@ import scipy.stats
 from multiprocessing import Pool
 from bisect import bisect
 
-from rpy2.robjects.packages import importr
-from rpy2.robjects.vectors import FloatVector
-
 import math
 import time
 
