@@ -97,9 +97,11 @@ def De_Novo_3UTR_Identification_Loading_Target_Wig_for_TCGA_Multiple_Samples_Mul
     if len(sys.argv) == 1:
         print "Please provide the configure file and specify chr name..."
         exit(1)
+    global no_chr_prefix
     cfg_file = sys.argv[1]
     curr_processing_chr = sys.argv[2]
-    if len(sys.argv) > 2 and sys.argv[3] in ["T","F"]:
+    no_chr_prefix = "F"
+    if len(sys.argv) > 3 and sys.argv[3] in ["T","F"]:
         no_chr_prefix = sys.argv[3]
     print >> sys.stderr, "[%s] Start Analysis ..." % time_now()
     Group1_Tophat_aligned_file, output_directory, Annotated_3UTR_file, Output_result_file, sequencing_depth_file, Num_threads, Coverage_threshold = parse_cfgfile(cfg_file)
