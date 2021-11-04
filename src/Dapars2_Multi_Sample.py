@@ -99,6 +99,8 @@ def De_Novo_3UTR_Identification_Loading_Target_Wig_for_TCGA_Multiple_Samples_Mul
         exit(1)
     cfg_file = sys.argv[1]
     curr_processing_chr = sys.argv[2]
+    if len(sys.argv) > 2 and sys.argv[3] in ["T","F"]:
+        no_chr_prefix = sys.argv[3]
     print >> sys.stderr, "[%s] Start Analysis ..." % time_now()
     Group1_Tophat_aligned_file, output_directory, Annotated_3UTR_file, Output_result_file, sequencing_depth_file, Num_threads, Coverage_threshold = parse_cfgfile(cfg_file)
 
@@ -350,7 +352,7 @@ def load_wig_funct_shared_dict_sampleid_key(All_wig_files, assigned_indexes,UTR_
             for line in fin:
                 if line[0] != '#' and line[0] != 't':
                     fields = line.strip('\n').split('\t')
-                    chrom_name = fields[0]
+                    chrom_name = (no_chr_prefix == "T")*'chr' + fields[0]
                     if chrom_name == curr_processing_chr:
                         region_start = int(fields[1])
                         region_end = int(fields[2])
