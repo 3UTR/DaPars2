@@ -122,7 +122,7 @@ def De_Novo_3UTR_Identification_Loading_Target_Wig_for_TCGA_Multiple_Samples_Mul
         print >> sys.stderr, "[%s] Start Analysis ..." % time_now()
 
         ##Prepare output directory
-        output_directory = output_folder.strip('/') + '_' + curr_processing_chr + '/'
+        output_directory = output_folder.rstrip('/') + '_' + curr_processing_chr + '/'
         d = os.path.dirname(output_directory)
         print(d)
         if not os.path.exists(d):
