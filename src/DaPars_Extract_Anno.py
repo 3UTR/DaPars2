@@ -38,10 +38,10 @@ def Annotation_prepar_3UTR_extraction(gene_bed_file, gene_symbol_map_kfXref_file
             if curr_strand == "+":
                 UTR_end = fields[2]
                 gene_start = int(fields[1])
-                UTR_start = str(gene_start + int(fields[-1].strip(',').split(',')[-1])+1)#1base
+                UTR_start = str(gene_start + int(fields[-1].strip(',').split(',')[-1]))
             elif curr_strand == "-":
                 gene_start = int(fields[1])
-                UTR_start = str(gene_start + 1)#1base
+                UTR_start = str(gene_start)#1base
                 UTR_end   = str(gene_start + int(fields[10].split(',')[0]))#1base, included
             
             this_UTR = fields[0]+UTR_start+UTR_end+curr_strand
