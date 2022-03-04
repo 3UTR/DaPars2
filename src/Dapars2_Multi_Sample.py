@@ -109,7 +109,7 @@ def De_Novo_3UTR_Identification_Loading_Target_Wig_for_TCGA_Multiple_Samples_Mul
         Sample_name.append(sample_name)
 
     ##Prepare output directory
-    output_directory = output_directory.strip('/') + '_' + curr_processing_chr + '/'
+    output_directory = output_directory.rstrip('/') + '_' + curr_processing_chr + '/'
     d = os.path.dirname(output_directory)
     if not os.path.exists(d):
         os.makedirs(d)
