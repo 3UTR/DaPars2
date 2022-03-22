@@ -67,19 +67,19 @@ def parse_cfgfile(cfg_file):
 
 
     if Aligned_Wig_files == '':
-        print >> sys.stderr, "No aligned BAM file found!"
+        print("No aligned BAM file found!", file=sys.stderr)
         exit(1)
     if output_directory=='':
-        print >> sys.stderr, "No output directory!"
+        print("No output directory!", file=sys.stderr)
         exit(1)
     if Annotated_3UTR_file=='':
-        print >> sys.stderr, "No annotated 3' UTR file!"
+        print("No annotated 3' UTR file!", file=sys.stderr)
         exit(1)
     if Output_result_file=='':
-        print >> sys.stderr, "No result file name!"
+        print("No result file name!", file=sys.stderr)
         exit(1)
     if sequencing_depth_file=='':
-        print >> sys.stderr, "No sequencing depth file!"
+        print("No sequencing depth file!", file=sys.stderr)
         exit(1)
 
     return Aligned_Wig_files, output_directory, Annotated_3UTR_file, Output_result_file, sequencing_depth_file, Num_threads, Coverage_threshold
@@ -95,9 +95,9 @@ def load_sequencing_depth(depth_file):
 def De_Novo_3UTR_Identification_Loading_Target_Wig_for_TCGA_Multiple_Samples_Multiple_threads_Main3_shared_list(argv=None):
     '''multiple threads version
     '''
-    print(len(sys.argv))
+    print((len(sys.argv)))
     if len(sys.argv) == 1:
-        print "Please provide the configure file and specify chr name..."
+        print("Please provide the configure file and specify chr name...")
         exit(1)
     
     cfg_file = sys.argv[1]
@@ -109,20 +109,20 @@ def De_Novo_3UTR_Identification_Loading_Target_Wig_for_TCGA_Multiple_Samples_Mul
         Sample_name.append(sample_name)
     #curr_processing_chr = sys.argv[2]
 
+#-- @xdzou: extract processing chromosomes from command line
+    fh=open(sys.argv[2],'r')
     All_chroms = []
-    All_chroms.append('chrX')
-    All_chroms.append('chrY')
-
-    for i in range(22):
-        curr_chr = 'chr%i' % (i+1)
-        All_chroms.append(curr_chr)
+    for line in fh.readlines():
+        line = line.strip()
+        All_chroms.append(line)
+    fh.close()
 
      
     for curr_processing_chr in All_chroms:
-        print >> sys.stderr, "[%s] Start Analysis ..." % time_now()
+        print("[%s] Start Analysis ..." % time_now(), file=sys.stderr)
 
         ##Prepare output directory
-        output_directory = output_folder.rstrip('/') + '_' + curr_processing_chr + '/'
+        output_directory = output_folder.rstrip('/') + '_' + curr_processing_chr + '/' #@xdzou,change strip() to rsrip()
         d = os.path.dirname(output_directory)
         print(d)
         if not os.path.exists(d):
@@ -136,17 +136,17 @@ def De_Novo_3UTR_Identification_Loading_Target_Wig_for_TCGA_Multiple_Samples_Mul
 
         num_samples = len(All_Sample_files)
 
-        print >> sys.stderr, "All samples Joint Processing %s ..." % curr_processing_chr
-        print >> sys.stderr, "[%s] Loading Coverage ..." % time_now()
+        print("All samples Joint Processing %s ..." % curr_processing_chr, file=sys.stderr)
+        print("[%s] Loading Coverage ..." % time_now(), file=sys.stderr)
 
         All_samples_Target_3UTR_coverages, UTR_events_dict = Load_Target_Wig_files_Multiple_threads_shared_dict_sampleid_key(All_Sample_files, Annotated_3UTR_file, Num_threads,curr_processing_chr)
         All_samples_sequencing_depths = load_sequencing_depth(sequencing_depth_file)
 
-        print All_samples_sequencing_depths
+        print(All_samples_sequencing_depths)
         All_sample_coverage_weights = All_samples_sequencing_depths/np.mean(All_samples_sequencing_depths)
 
         #print All_sample_coverage_weights
-        print >> sys.stderr, "[%s] Loading Coverage Finished ..." % time_now()
+        print("[%s] Loading Coverage Finished ..." % time_now(), file=sys.stderr)
         #Write the first line
         first_line = ['Gene','fit_value','Predicted_Proximal_APA','Loci']
         for i in range(num_samples):
@@ -158,7 +158,7 @@ def De_Novo_3UTR_Identification_Loading_Target_Wig_for_TCGA_Multiple_Samples_Mul
 
         Output_result.writelines('\t'.join(first_line) + '\n')
 
-        All_events_ids = UTR_events_dict.keys()
+        All_events_ids = list(UTR_events_dict.keys())
         num_threads = Num_threads
         Assigned_events_ids_all_threads = Assign_to_different_processor_balance_events(All_events_ids, num_threads)
 
@@ -187,7 +187,7 @@ def De_Novo_3UTR_Identification_Loading_Target_Wig_for_TCGA_Multiple_Samples_Mul
         Output_result.close()
 
 
-    print >> sys.stderr, "[%s] Finished!" % time_now()
+    print("[%s] Finished!" % time_now(), file=sys.stderr)
 
 
 def Each_Thread_3UTR_estimation_list_version_sample_ids(curr_thread_UTR_events_ids, UTR_events_dict, All_sample_coverage_weights, num_samples, Output_result_file, All_samples_coverage_shared_dict, Coverage_threshold):
@@ -251,9 +251,9 @@ def De_Novo_3UTR_Coverage_estimation_Genome_for_multiple_samples(All_Samples_cur
     least_pass_coverage_num = num_samples * least_pass_coverage_percentage
     if len(Pass_threshold_index) > least_pass_coverage_num and UTR_end - UTR_start >=150:
         if curr_strand == "+":
-            search_region = range(UTR_start+search_point_start, UTR_end-search_point_end+1)
+            search_region = list(range(UTR_start+search_point_start, UTR_end-search_point_end+1))
         else:
-            search_region = range(UTR_end - search_point_start, UTR_start+search_point_end-1, -1)
+            search_region = list(range(UTR_end - search_point_start, UTR_start+search_point_end-1, -1))
 
         search_region_start = search_point_start
         search_region_end = UTR_end - UTR_start - search_point_end
@@ -355,7 +355,7 @@ def load_wig_funct_shared_dict_sampleid_key(All_wig_files, assigned_indexes,UTR_
     '''
     for i in assigned_indexes:
         curr_wig_file = All_wig_files[i]
-        print >> sys.stderr, curr_wig_file
+        print(curr_wig_file, file=sys.stderr)
         curr_sample_All_chroms_coverage_dict = {}
         with open(curr_wig_file, 'r') as fin:
             for line in fin:
@@ -379,7 +379,7 @@ def load_wig_funct_shared_dict_sampleid_key(All_wig_files, assigned_indexes,UTR_
                             break
             fin.close()
         if curr_processing_chr not in curr_sample_All_chroms_coverage_dict:
-            print >> sys.stderr, 'no wig: ' + curr_wig_file
+            print('no wig: ' + curr_wig_file, file=sys.stderr)
         else:
             curr_sample_All_chroms_coverage_dict[curr_processing_chr][1].append(0)
 
@@ -405,7 +405,7 @@ def load_wig_funct_shared_dict_sampleid_key(All_wig_files, assigned_indexes,UTR_
 
 def Assign_to_different_processor_balance(Total_number, num_processors):
     Assigned_results = []
-    num_each_processor = Total_number/num_processors
+    num_each_processor = int(Total_number/num_processors)#@xdzou: add int()
 
     if num_each_processor == 0:
         for i in range(Total_number):
@@ -413,9 +413,9 @@ def Assign_to_different_processor_balance(Total_number, num_processors):
     else:
         remain = Total_number - num_processors * num_each_processor
         for i in range(remain):
-            Assigned_results.append(range((i)*(num_each_processor + 1), (i+1)*(num_each_processor + 1)))
+            Assigned_results.append(list(range((i)*(num_each_processor + 1), (i+1)*(num_each_processor + 1))))
         for i in range(num_processors-remain):
-            Assigned_results.append(range(i*num_each_processor+remain*(num_each_processor+1), (i+1)*num_each_processor+remain*(num_each_processor+1)))
+            Assigned_results.append(list(range(i*num_each_processor+remain*(num_each_processor+1), (i+1)*num_each_processor+remain*(num_each_processor+1))))
 
     return Assigned_results
 
@@ -423,7 +423,7 @@ def Assign_to_different_processor_balance(Total_number, num_processors):
 def Assign_to_different_processor_balance_events(All_events_ids, num_processors):
     Assigned_results = []
     Total_number = len(All_events_ids)
-    num_each_processor = Total_number/num_processors
+    num_each_processor = int(Total_number/num_processors) #xdzou: add int()
 
     if num_each_processor == 0:
         for i in range(Total_number):
@@ -431,16 +431,16 @@ def Assign_to_different_processor_balance_events(All_events_ids, num_processors)
     else:
         remain = Total_number - num_processors * num_each_processor
         for i in range(remain):
-            Assigned_results.append(range((i)*(num_each_processor+1), (i+1)*(num_each_processor+1)))
+            Assigned_results.append(list(range((i)*(num_each_processor+1), (i+1)*(num_each_processor+1))))
 
         for i in range(num_processors-remain):
-            Assigned_results.append(range(i*num_each_processor+remain*(num_each_processor+1), (i+1)*num_each_processor+remain*(num_each_processor+1)))
+            Assigned_results.append(list(range(i*num_each_processor+remain*(num_each_processor+1), (i+1)*num_each_processor+remain*(num_each_processor+1))))
     #print assigned Results
     Assigned_events = []
-    print '#assigned events:'
+    print('#assigned events:')
     for curr_processor_inds in Assigned_results:
         curr_processor_events = []
-        print len(curr_processor_inds)
+        print(len(curr_processor_inds))
         for curr_ele in curr_processor_inds:
             curr_processor_events.append(All_events_ids[curr_ele])
         Assigned_events.append(curr_processor_events)
