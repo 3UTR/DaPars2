@@ -1,5 +1,5 @@
 # DaPars
-Current version: 2.0
+Current version: 2.1
 
 Dynamics analysis of Alternative PolyAdenylation from multiple RNA-seq data
 
