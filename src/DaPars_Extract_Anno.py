@@ -38,10 +38,10 @@ def Annotation_prepar_3UTR_extraction(gene_bed_file, gene_symbol_map_kfXref_file
             if curr_strand == "+":
                 UTR_end = fields[2]
                 gene_start = int(fields[1])
-                UTR_start = str(gene_start + int(fields[-1].strip(',').split(',')[-1]))
+                UTR_start = str(gene_start + int(fields[-1].strip(',').split(',')[-1])+1)#1base
             elif curr_strand == "-":
                 gene_start = int(fields[1])
-                UTR_start = str(gene_start)#1base
+                UTR_start = str(gene_start + 1)#1base
                 UTR_end   = str(gene_start + int(fields[10].split(',')[0]))#1base, included
             
             this_UTR = fields[0]+UTR_start+UTR_end+curr_strand
@@ -53,7 +53,7 @@ def Annotation_prepar_3UTR_extraction(gene_bed_file, gene_symbol_map_kfXref_file
     
     
     output_write.close()   
-    print "Total extracted 3' UTR: " + str(num_saved)
+    print("Total extracted 3' UTR: " + str(num_saved))
 
 
 
@@ -111,11 +111,11 @@ def Extract_Anno_main(argv):
     try:
         opts, args = getopt.getopt(argv,"hb:s:o:",["bed=","symbol=","ofile"])
     except getopt.GetoptError:
-        print 'python DaPars_Extract_Anno.py -b <gene_bed_file> -s <gene_symbol_map> -o <output_file>'
+        print('python DaPars_Extract_Anno.py -b <gene_bed_file> -s <gene_symbol_map> -o <output_file>')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print 'python DaPars_Extract_Anno.py -b <gene_bed_file> -s <gene_symbol_map> -o <output_file>'
+            print('python DaPars_Extract_Anno.py -b <gene_bed_file> -s <gene_symbol_map> -o <output_file>')
             sys.exit()
         elif opt in ("-b", "--bed"):
             gene_bed_file = arg
@@ -125,17 +125,17 @@ def Extract_Anno_main(argv):
             output_final_extract_file = arg
     
     if gene_bed_file=='':
-        print >> sys.stderr, "Error: No gene bed file!"
+        print("Error: No gene bed file!", file=sys.stderr)
         exit(1)
     if gene_symbol_annotation_file=='':
-        print >> sys.stderr, "Error: No gene symbol file!"
+        print("Error: No gene symbol file!", file=sys.stderr)
         exit(1)
     
     if output_final_extract_file=='':
-        print >> sys.stderr, "Error: No output file!"
+        print("Error: No output file!", file=sys.stderr)
         exit(1)
     
-    print "Generating regions ..."
+    print("Generating regions ...")
     Annotation_prepar_3UTR_extraction(gene_bed_file, gene_symbol_annotation_file,output_extract_file)
     Subtract_different_strand_overlap(output_extract_file,output_final_extract_file)
     
@@ -145,7 +145,7 @@ def Extract_Anno_main(argv):
         pass
 
     
-    print "Finished"
+    print("Finished")
 
 if __name__ == '__main__':
     Extract_Anno_main(sys.argv[1:])
