@@ -18,15 +18,6 @@ The dynamic usage of the 3’untranslated region (3’UTR) resulting from altern
 
 ![Flowchart](https://farm8.staticflickr.com/65535/51154541918_8a63879ed1_k.jpg)
 
-## Installation
-**Prerequisite: python2.7; numpy; scipy; R
-
-**Install Dapars2:
-
-> tar zxf DaPars2-VERSION.tar.gz
-> cd DaPars2-VERSION
-
-## Input format
 
 ## Citation
 
