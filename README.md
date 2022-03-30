@@ -1,4 +1,6 @@
 [![Github Release](https://img.shields.io/badge/release-v2.1-brightgreen)](https://github.com/3UTR/DaPars2)
+[![python Release](https://img.shields.io/badge/python-3.8-brightgreen)](https://www.python.org/downloads/)
+
 # DaPars
 Current version: 2.1
 
