@@ -1,3 +1,4 @@
+[![Github Release](https://img.shields.io/badge/release-v2.1-brightgreen)](https://github.com/3UTR/DaPars2)
 # DaPars
 Current version: 2.1
 
