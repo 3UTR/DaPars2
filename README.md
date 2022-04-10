@@ -8,7 +8,7 @@
 
 Dynamics analysis of Alternative PolyAdenylation from multiple RNA-seq data
 
-A [Full Documentations](https://github.com/3UTR/DaPars2/wiki) can be found in Wiki page. And a related 3'aQTL pipeline based on Dapars2 can be found [Here](https://github.com/Xu-Dong/3aQTL_pipe).
+A [Full Documentations](https://github.com/3UTR/DaPars2/wiki) can be found in Wiki page. And a related 3'aQTL pipeline based on Dapars2 can be found [Here](https://github.com/3UTR/3aQTL_pipe).
 
 ## Introduction
 
