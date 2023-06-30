@@ -3,13 +3,10 @@ import os
 import sys
 import datetime
 import threading
-#import scipy as sp
+import scipy as sp
 import scipy.stats
 from multiprocessing import Pool
 from bisect import bisect
-import pandas as pd
-
-#np.seterr(all='raise')
 
 import math
 import time
