@@ -13,7 +13,7 @@ Dynamics analysis of Alternative PolyAdenylation from long-reads RNA-seq data, b
 
 The dynamic usage of the 3’untranslated region (3’UTR) resulting from alternative polyadenylation (APA) is emerging as a pervasive mechanism for regulating mRNA diversity, stability and translation. DaPars2_LR directly infers the dynamic alternative polyadenylation (APA) usage by comparing two samples. DaPars2_LR uses a different breakpoint detection method than DaPars2, described in our [publication](https://www.biorxiv.org/content/10.1101/2022.12.12.520051v3). It can infer the de novo proximal APA sites and returns long and short 3’UTR expression levels, associated with a FDR-adjusted Fisher test p-value. DaPars2_LR is the only tool for long-reads that uses coverage information (BedGraph), making it very efficient. 
 
-![Flowchart](docs/Dapars_readme_COL6A1.png) 
+![Flowchart](doc/Dapars_readme_COL6A1.png) 
 
 ## Workflow
 
